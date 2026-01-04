@@ -10,6 +10,7 @@ import About from './components/footer/company/about'
 import Browser from './components/Browser'
 import Profile from './components/profile'
 import Jobdescription from './components/Jobdescription'
+import PostJob from './components/admin/PostJob'
 
 const appRouter = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const appRouter = createBrowserRouter([
   {
     path: '/description/:id',
     element: <Jobdescription />,
+  },
+  {
+    path: '/admin/jobs',
+    element: <PostJob />,
   },
 ])
 

@@ -4,10 +4,14 @@
 //import the slice in store 
 import {configureStore} from "@reduxjs/toolkit"
 import authSlice from "./authslice"
+import jobSlice from "./jobSlice"
+import companySlice from "./companySlice"
 
  const store = configureStore({
     reducer:{
-        auth: authSlice
+        auth: authSlice,
+        job: jobSlice,
+        company: companySlice
     }
 })
 
