@@ -89,9 +89,10 @@ export const login = async (req, res) => {
             userId: user._id
         }
 
-        //generate the token with jwt,sign and secret key and expiry date
+        // generate the token with tokendata and secret key and expiry
         const token = jwt.sign(tokenData, process.env.SECRET_KEY, { expiresIn: '1d' })
 
+    
         user = {
             _id: user._id,
             fullName: user.fullName,
@@ -101,8 +102,8 @@ export const login = async (req, res) => {
             profile: user.profile,
         }
 
-        //store the token in cookie
-        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' }).json({
+        // store the token in cookie 
+       return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: 'strict' }).json({
             message: `User login succesfully welcome back ${user.fullName}`,
             user,
             success: true
@@ -130,17 +131,14 @@ export const updateProfile = async (req, res) => {
     try {
         const { fullName, email, phoneNumber, bio, skills } = req.body
         const file = req.file;
-        //we can update the random things   
-        //cloudinary will come here ....
-        //skills will come in string we will have to convert them in array 
-        let skillArray;
+
+        let skillArray; // skill arry is empty and we will convert this in an array
         if (skills) {
             skillArray = skills.split(",")
         }
 
-        const userId = req.id;     //id will come from req.id we will get them in userid by findby
-        let user = await User.findById(userId)   // we will find the user by findbyid in user.id 
-        //first we will check the user exist or not to update then  only update user
+        const userId = req.id;    //id will come from req.id we will get them in userid to find them and update them
+        let user = await User.findById(userId)  // we will get the id by req.id
         if (!user) {
             return res.status(400).json({
                 message: 'user not found please register first',
@@ -148,16 +146,13 @@ export const updateProfile = async (req, res) => {
             })
         }
         // updating the data
-        // we will chnage the req form data into stored data
         if (fullName) user.fullName = fullName
         if (email) user.email = email
         if (phoneNumber) user.phoneNumber = phoneNumber
         if (bio) user.profile.bio = bio
         if (skills) user.profile.skills = skillArray
 
-        //  resume come later here
 
-        //this will send on postman body and it will show on postman body
         await user.save()
         user = {
             _id: user._id,
@@ -176,52 +171,6 @@ export const updateProfile = async (req, res) => {
         console.log(error)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

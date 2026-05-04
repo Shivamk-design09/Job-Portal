@@ -1,7 +1,7 @@
 import { Job } from "../models/job.model.js";
 
 
-//adming job post karega  
+//adming job post karega
 export const postJob = async (req, res) => {
     try {
         //we will get all the fild in req.body
